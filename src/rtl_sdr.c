@@ -223,6 +223,15 @@ int main(int argc, char **argv)
 		out_block_size = DEFAULT_BUF_LENGTH;
 	}
 
+	int tmp_stdout = suppress_stdout_start();
+	// TODO: allow choosing input format, see https://www.reddit.com/r/RTLSDR/comments/4tpxv7/rx_tools_commandline_sdr_tools_for_rtlsdr_bladerf/d5ohfse?context=3
+	r = verbose_device_search(dev_query, &dev);
+
+	if (r != 0) {
+		fprintf(stderr, "Failed to open sdr device matching '%s'.\n", dev_query);
+		exit(1);
+	}
+
 	int num_chan = SoapySDRDevice_getNumChannels(dev, SOAPY_SDR_RX);
 	int active_chan = (channel == -1) ? num_chan : 1;
 
@@ -237,15 +246,6 @@ int main(int argc, char **argv)
 		fbuf = malloc(out_block_size * SoapySDR_formatToSize(SOAPY_SDR_CF32)*active_chan);
 	}
 	size_t input_elem_size = SoapySDR_formatToSize(input_format);
-
-	int tmp_stdout = suppress_stdout_start();
-	// TODO: allow choosing input format, see https://www.reddit.com/r/RTLSDR/comments/4tpxv7/rx_tools_commandline_sdr_tools_for_rtlsdr_bladerf/d5ohfse?context=3
-	r = verbose_device_search(dev_query, &dev);
-
-	if (r != 0) {
-		fprintf(stderr, "Failed to open sdr device matching '%s'.\n", dev_query);
-		exit(1);
-	}
 
 	fprintf(stderr, "Using output format: %s (input format %s, %d bytes per element)\n", output_format, input_format, (int)input_elem_size);
 
