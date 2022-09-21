@@ -37,9 +37,9 @@
 #include <SoapySDR/Formats.h>
 
 #define DEFAULT_SAMPLE_RATE		2048000
-#define DEFAULT_BUF_LENGTH		(16 * 16384)
+#define DEFAULT_BUF_LENGTH		8192
 #define MINIMAL_BUF_LENGTH		512
-#define MAXIMAL_BUF_LENGTH		(256 * 16384)
+#define MAXIMAL_BUF_LENGTH		(256 * 8192)
 
 #define ISFMT(a,b) (!strcmp((a),(b)))
 
