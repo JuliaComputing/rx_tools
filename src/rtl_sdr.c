@@ -294,6 +294,7 @@ int main(int argc, char **argv)
 	r = verbose_setup_stream(dev, &stream, channel, input_format);
 	if(r != 0){
 		fprintf(stderr, "Failed to setup stream\n");
+		exit(1);
 	}
 	/* Reset endpoint before we start reading from it (mandatory) */
 	verbose_reset_buffer(dev);
